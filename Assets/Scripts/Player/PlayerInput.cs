@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
-    public float a;
+    
     public float X, Y;
     public bool IsJump;
     public bool IsAttack;
