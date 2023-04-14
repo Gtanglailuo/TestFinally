@@ -199,7 +199,7 @@ MonoBehaviour:
   IsJump: 0
   IsAttack: 0
   IsRoll: 0
-  IsAirAttack: 0
+  JumpAttacking: 0
 --- !u!114 &48056035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -212,6 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00ba85cc50167342a31ff3abab48d4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsAirAttack: 0
   dir: {x: 0, y: 0}
   isGround: 1
   speed: 6

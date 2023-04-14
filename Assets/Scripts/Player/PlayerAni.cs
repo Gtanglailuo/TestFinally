@@ -45,7 +45,7 @@ public class PlayerAni : MonoBehaviour
 
     public void AttackEventEnd()
     {
-        GetComponentInParent<PlayerC>().curState = PlayerC.PlayerState.Normal;
+        //GetComponentInParent<PlayerC>().curState = PlayerC.PlayerState.Normal;
         _playerInput.IsAttack = false;
         ani.ResetTrigger("IsAttack");
         Debug.Log("¹¥»÷½áÊø");

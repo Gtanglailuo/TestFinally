@@ -118,7 +118,6 @@ public class PlayerC : MonoBehaviour
                     _playerAni.IdleToUp();
                 }
                 
-
             }
         if (isGround)
         {
