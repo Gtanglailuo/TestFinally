@@ -12,7 +12,6 @@ public class PlayerAni : MonoBehaviour
         ani = GetComponent<Animator>();
         _playerInput = GetComponentInParent<PlayerInput>();
         _playerC = GetComponentInParent<PlayerC>();
-        ani.SetBool("IsFly", false);
     }
 
     public void IdleToRun()
@@ -22,7 +21,6 @@ public class PlayerAni : MonoBehaviour
     public void IdleToUp()
     {
         ani.SetBool("IsUp", true) ;
-        ani.SetBool("IsFly", true);
         ani.SetBool("IsDown", false);
         ani.SetBool("IsGround", false);
 
@@ -43,35 +41,30 @@ public class PlayerAni : MonoBehaviour
     public void Attacking()
     {
         ani.SetTrigger("IsAttack");
-        ani.SetBool("IsDimian",this.GetComponentInParent<PlayerC>().isGround);
     }
-    public void AttackingAir()
-    {
-        //_playerC.curState = PlayerC.PlayerState.Jump;
-        ani.SetTrigger("IsAttack");
-    }
+
     public void AttackEventEnd()
     {
-        _playerC.curState = PlayerC.PlayerState.Normal;
+        GetComponentInParent<PlayerC>().curState = PlayerC.PlayerState.Normal;
         _playerInput.IsAttack = false;
         ani.ResetTrigger("IsAttack");
         Debug.Log("¹¥»÷½áÊø");
     }
-
-    public void AttackFlyEventEnd()
+    public void JumpAttackEventEnd()
     {
-        _playerInput.IsAirAttack = false;
-        ani.ResetTrigger("IsAttack");
-        Debug.Log("ÌøÔ¾¹¥»÷½áÊø");
+        _playerInput.JumpAttacking = false;
+    }
+    public void JumpAttacking(bool a)
+    {
+        ani.SetBool("JumpAttack", a);
     }
 
-    public void IsNotFly()
+    public void ClearAllAnimator()
     {
-        ani.SetBool("IsFly", false);
-    }
-    public void IsFly()
-    {
-        ani.SetBool("IsFly", true);
+        ani.SetBool("IsUp", false);
+        ani.SetBool("IsDown", false);
+        ani.SetBool("IsGround", false);
+        ani.SetBool("JumpAttack", false);
     }
 
 }

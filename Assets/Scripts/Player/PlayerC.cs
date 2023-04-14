@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerC : MonoBehaviour
 {
-    public int a;
+
     public bool IsAirAttack;
     private PlayerInput _playerInput;
 
@@ -35,6 +35,7 @@ public class PlayerC : MonoBehaviour
         dir.Set(_playerInput.X, _playerInput.Y);
         Face(_playerInput.X);
         isGround = IsGround();
+
         if (_playerInput.IsJump && isGround)
         {
             curState = PlayerState.Jump;         
@@ -44,19 +45,6 @@ public class PlayerC : MonoBehaviour
             curState = PlayerState.Attack;
         }
 
-        if (isGround)
-        {
-            _playerAni.IsNotFly();
-        }
-        else
-        {
-            _playerAni.IsFly();
-        }
-
-        if (!isGround && _playerInput.IsAttack)
-        {
-            IsAirAttack = true;
-        }
     }
     private void FixedUpdate()
     {
@@ -68,10 +56,7 @@ public class PlayerC : MonoBehaviour
                 Jump();
                 break;
             case PlayerState.Attack:
-                if (isGround)
-                {
-                    _playerAni.Attacking();
-                }
+                _playerAni.Attacking();
                 break;
             case PlayerState.Hurt:
                 break;
@@ -87,8 +72,9 @@ public class PlayerC : MonoBehaviour
 
     private void Move()
     {
-        if (_playerInput.IsAttack)
+        if (_playerInput.IsAttack&&isGround)
         {
+            _playerAni.ClearAllAnimator();
             _playerInput.IsJump = false;
             ri.velocity = Vector2.zero;
             return;
@@ -98,43 +84,46 @@ public class PlayerC : MonoBehaviour
     }
     void Jump()
     {
-      
+        
         if (_playerInput.IsJump && isGround)
         {
             ri.velocity = Vector2.up * jumpForce;
         }
         
-        if (ri.velocity.y<0)//下
-        {
-            ri.velocity += Vector2.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
-            if (IsAirAttack)
-            {
-                Debug.Log("hdua");
-                _playerAni.AttackingAir();
-            }
-            else
-            {
-                _playerAni.UpToDown();
-            }
 
-        }
-        else if(ri.velocity.y>0)//上
-        {
-            ri.velocity += Vector2.up * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
-            
-            if (IsAirAttack)
+            if (ri.velocity.y < 0)//下
             {
-                Debug.Log("hdua");
-                _playerAni.AttackingAir();
+                ri.velocity += Vector2.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
+                if (_playerInput.JumpAttacking && !isGround && !this.GetComponentInChildren<Animator>().GetCurrentAnimatorStateInfo(0).IsName("AirAttack"))
+                {
+                    Debug.Log("跳跃");
+                    _playerAni.JumpAttacking(true);
+                }
+                else
+                {
+                    _playerAni.UpToDown();
+                }
+
             }
-            else
+            else if (ri.velocity.y > 0)//上
             {
-                _playerAni.IdleToUp();
+                ri.velocity += Vector2.up * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
+                if (_playerInput.JumpAttacking && !isGround && !this.GetComponentInChildren<Animator>().GetCurrentAnimatorStateInfo(0).IsName("AirAttack"))
+                {
+                    Debug.Log("跳跃");
+                    _playerAni.JumpAttacking(true);
+                }
+                else
+                {
+                    _playerAni.IdleToUp();
+                }
+                
+
             }
-        }
         if (isGround)
         {
             _playerAni.DownToIdle();
+            
         }
         _playerInput.IsJump = false;
     }

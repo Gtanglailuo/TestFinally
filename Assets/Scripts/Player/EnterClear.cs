@@ -6,8 +6,6 @@ public class EnterClear : StateMachineBehaviour
 {
     public string[] index;
     public string Attack;
-    public string[] index1;
-    public string Attack1;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -30,11 +28,6 @@ public class EnterClear : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
 
-        foreach (var item in index1)
-        {
-            animator.SetBool(item, false);
-        }
-        animator.ResetTrigger(Attack1);
 
 
     }
