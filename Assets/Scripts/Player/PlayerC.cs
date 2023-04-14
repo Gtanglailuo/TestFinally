@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerC : MonoBehaviour
 {
+    public int a;
     public bool IsAirAttack;
     private PlayerInput _playerInput;
 
