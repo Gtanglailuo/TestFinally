@@ -9,7 +9,7 @@ public class PlayerInput : MonoBehaviour
     public bool IsJump;
     public bool IsAttack;
     public bool IsRoll;
-    public bool JumpAttacking;
+    public bool JumpAttacking=false;
     void Update()
     { 
         X = Input.GetAxisRaw("Horizontal");
@@ -18,7 +18,7 @@ public class PlayerInput : MonoBehaviour
         {
             IsJump = Input.GetKeyDown(KeyCode.W);
         }
-        if (Input.GetKeyDown(KeyCode.J)&& !IsAttack)
+        if (Input.GetKeyDown(KeyCode.J)&& !IsAttack&& GetComponent<PlayerC>().curState != PlayerC.PlayerState.Jump)
         {
             IsAttack = Input.GetKeyDown(KeyCode.J);
 
@@ -27,7 +27,7 @@ public class PlayerInput : MonoBehaviour
         {
             IsRoll = Input.GetKeyDown(KeyCode.Space);
         }
-        if (Input.GetKeyDown(KeyCode.K) && !JumpAttacking)
+        if (Input.GetKeyDown(KeyCode.K) && !JumpAttacking&&GetComponent<PlayerC>().curState==PlayerC.PlayerState.Jump)
         {
             JumpAttacking = Input.GetKeyDown(KeyCode.K);
         }

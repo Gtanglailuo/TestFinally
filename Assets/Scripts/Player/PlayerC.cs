@@ -38,7 +38,8 @@ public class PlayerC : MonoBehaviour
 
         if (_playerInput.IsJump && isGround)
         {
-            curState = PlayerState.Jump;         
+            curState = PlayerState.Jump;
+            _playerInput.IsAttack = false;
         }
         if (_playerInput.IsAttack&&isGround)
         {
@@ -56,7 +57,10 @@ public class PlayerC : MonoBehaviour
                 Jump();
                 break;
             case PlayerState.Attack:
-                _playerAni.Attacking();
+                if (isGround)
+                {
+                    _playerAni.Attacking();
+                }
                 break;
             case PlayerState.Hurt:
                 break;
